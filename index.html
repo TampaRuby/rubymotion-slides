@@ -165,8 +165,8 @@
         </section>
 
         <section>
-          <pre><code data-trim class="rb" style='max-height: 600px;'>
-class FruitsViewController &gt; UITableViewController
+          <pre><code data-trim class="ruby" style='max-height: 600px;'>
+class FruitsViewController < UITableViewController
   attr_reader :fruits
 
   def viewDidLoad
@@ -194,6 +194,10 @@ end
           </code></pre>
         </section>
 
+        <section>
+          <p>Ruby eliminates the need for dealing with implementing interfaces or juggling headers. Just implement the correct method and everything is good to go. Look in to code completion for your favorite editor.</p>
+        </section>
+
 
         <section>
           <p>Even though you are using Ruby you still <strong><u>need</u></strong> to know and understand the Cocoa API.</p>
@@ -212,7 +216,7 @@ end
 
         <section>
           <h2>Full Cocoa API Support!</h2>
-          <pre><code class='rb' data-trim>
+          <pre><code class="ruby" data-trim>
 label = UILabel.alloc.init
 label.text = 'My Super Cool String'
 
@@ -292,7 +296,7 @@ $ rake pod:install
           <h2>Full support for Storyboards/Interface Builder!</h2>
           <p>The gem handles generating a stub xcodeproj and allows you to use all of the features of Interface Builder. It handles creating stub implementation headers for the drag and drop Interface Builder features. (Outlets, Actions, Segues, etc)</p>
           <br>
-          <pre><code class='rb' data-trim>
+          <pre><code class="ruby" data-trim>
 # Gemfile
 gem 'ib'
           </code></pre>
@@ -317,10 +321,10 @@ $ rake ib
           <p>Almost all of the Ruby features are available with the exception of two things:</p>
           <br>
           String Eval
-          <pre><code class="rb">eval("whyudodis = MyBadIdea.infect_my_system")</code></pre>
+          <pre><code class="ruby">eval("whyudodis = MyBadIdea.infect_my_system")</code></pre>
           <br>
           Require
-          <pre><code class="rb">require 'my_other_file'</code></pre>
+          <pre><code class="ruby">require 'my_other_file'</code></pre>
         </section>
 
         <section>
@@ -436,7 +440,7 @@ a_task.assignees.create(:assignee_name => "Howard")
         <section>
           <p><code>gem 'bubble-wrap'</code></p><br>
           <p>This gem is wonderful for wrapping some annoying Cocoa APIs with nice interfaces.</p><br>
-          <pre><code data-trim class='rb'>
+          <pre><code data-trim class="ruby">
 BW::Location.enabled? # Whether location services are enabled on the device
 #=> true
 BW::Location.authorized? # If your app is authorized to use location services
@@ -449,7 +453,7 @@ File.join(App.documents_path, 'database.sqlite')
         <section>
           <p><code>gem 'motion-support'</code></p><br>
           <p>A port of useful features of ActiveSupport.</p>
-          <pre><code data-trim class='rb'>
+          <pre><code data-trim class="ruby">
 1.week.ago
 17.days.from_now
 Date.yesterday
