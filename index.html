@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>reveal.js - The HTML Presentation Framework</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/beige.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+    <script>
+      if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+      }
+    </script>
+
+    <style type="text/css">
+      img, .unstyled {
+        border: 0 !important;
+        box-shadow: none !important;
+      }
+
+      code {
+        padding: 15px !important;
+      }
+
+      .table {
+        margin: 80px auto !important;
+        display: block;
+        width: 500px;
+        border: 2px solid #000 !important;
+      }
+
+      td, th {
+        padding: 15px !important;
+        text-align: center;
+        width: 100%;
+      }
+
+      th {
+        border-bottom: 3px solid #000 !important;
+      }
+
+    </style>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+
+
+        <section>
+          <h1>RubyMotion</h1>
+          <p>OSX and iOS Development with Ruby</p>
+          <p><small>
+            A talk by <a>@tylerjohnst</a>
+          </small></p>
+        </section>
+
+        <section>
+          <h3>Hi!! I'm Tyler Johnston</h3>
+          <img src="imgs/ocean.jpg">
+          <p>Owner of Ahoy Consulting and Runner of Suncoast.js Meetup</p>
+        </section>
+
+        <section>
+          <em>Psst... you should come!</em>
+        </section>
+
+        <section>
+          <h2>What is RubyMotion?</h2>
+          <img src="imgs/rubymotion.png" class="unstyled">
+        </section>
+
+        <section>
+          <p>RubyMotion allows you as the developer to create and publish native Mac and iOS applications using Ruby.</p>
+        </section>
+
+        <section>
+          <p>Yes, native. The RubyMotion compiler handles converting the Ruby code in to LLVM bytecode.</p>
+        </section>
+
+        <section>
+          <p>RubyMotion allows you all the power and expressiveness of the Ruby VM while letting you deploy to other platforms.</p>
+        </section>
+
+        <section>
+          <p>Ok but what is RubyMotion really like compared to Objective-C?</p>
+        </section>
+
+        <section>
+          <pre><code data-trim>
+// TableViewController.h
+#import &lt;UIKit/UIKit.h&gt;
+@interface TableViewController : UITableViewController
+  @property NSArray *fruits;
+@end
+          </code></pre>
+
+          <pre><code data-trim class='objective-c'>
+// TableViewController.m
+#import "TableViewController.h"
+@interface TableViewController ()
+@end
+
+@implementation TableViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self setFruits:@[@"apple", @"pear", @"banana"]];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.fruits count];
+}
+
+- (UITableViewCell *)cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"foobar"];
+
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"foobar"];
+    }
+
+    NSString *cellValue = [self.fruits objectAtIndex:indexPath.row];
+
+    cell.textLabel.text = cellValue;
+
+    return cell;
+}
+
+@end
+          </code></pre>
+        </section>
+
+        <section>
+          <pre><code data-trim class="rb" style='max-height: 600px;'>
+class FruitsViewController &gt; UITableViewController
+  attr_reader :fruits
+
+  def viewDidLoad
+    super
+    @fruits = %w(apple pear banana)
+  end
+
+  def tableView(tableView, numberOfRowsInSection: section)
+    fruits.length
+  end
+
+  def tableView(tableView, cellForRowAtIndexPath: indexPath)
+    tableViewCell.tap do |cell|
+      cell.textLabel.text = fruits[indexPath.row]
+    end
+  end
+
+  private
+
+  def tableViewCell
+    tableView.dequeueReusableCellWithIdentifier('MyCell') ||
+      UITableViewCell.alloc.initWithStyle(UITableViewCellStyleValue1, reuseIdentifier: 'MyCell')
+  end
+end
+          </code></pre>
+        </section>
+
+
+        <section>
+          <p>Even though you are using Ruby you still <strong><u>need</u></strong> to know and understand the Cocoa API.</p>
+          <br>
+          <p>Well, some of it. Thats what documentation is for!</p>
+        </section>
+
+        <section>
+          <p>This is the least impressive part of the toolchain. It just looks like awkward Ruby, and it is.</p>
+        </section>
+
+        <section>
+          <p>Everything I've tried to use has been supported 100%. They seem to have about a month lag behind Apple's release. The new iPhone sizes took about that long to land in RubyMotion.</p>
+        </section>
+
+
+        <section>
+          <h2>Full Cocoa API Support!</h2>
+          <pre><code class='rb' data-trim>
+label = UILabel.alloc.init
+label.text = 'My Super Cool String'
+
+view.addConstraints(
+  NSLayoutConstraint.constraintsWithVisualFormat('H:|-20-[password]-20-|',
+    options: 0,
+    metrics: nil,
+    views:   views
+  )
+)
+          </code></pre>
+        </section>
+
+        <section>
+          <p>RubyMotion hides a lot of the work it's doing for you. All of the Cocoa API's accept and convert the Ruby primiatives.</p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Cocoa</th>
+                <th>Ruby</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>NSString</td>
+                <td>String</td>
+              </tr>
+              <tr>
+                <td>NSInteger</td>
+                <td>Integer</td>
+              </tr>
+
+              <tr>
+                <td>NSDictionary</td>
+                <td>Hash</td>
+              </tr>
+
+              <tr>
+                <td>NSArray</td>
+                <td>Array</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            <code>NSLog("Foo#{:bar}")</code>
+          </p>
+        </section>
+
+        <section>
+          <h2>Full support for CocoaPods!</h2>
+          <p>CocoaPods is the dependency manager for Objective-C projects. It has thousands of libraries and can help you scale your projects elegantly.</p>
+          <br>
+          <pre><code class="ruby" data-trim>
+# Gemfile
+gem 'motion-cocoapods'
+          </code></pre>
+
+          <pre><code class="ruby" data-trim>
+# Rakefile
+app.pods do
+  pod 'afnetworking'
+end
+
+          </code></pre>
+
+          <pre><code data-trim>
+$ rake pod:install
+          </code></pre>
+        </section>
+
+
+
+        <section>
+          <h2>Full support for Storyboards/Interface Builder!</h2>
+          <p>The gem handles generating a stub xcodeproj and allows you to use all of the features of Interface Builder. It handles creating stub implementation headers for the drag and drop Interface Builder features. (Outlets, Actions, Segues, etc)</p>
+          <br>
+          <pre><code class='rb' data-trim>
+# Gemfile
+gem 'ib'
+          </code></pre>
+
+          <pre><code>
+$ rake ib
+          </code></pre>
+        </section>
+
+        <section>
+          <p>Now most of that stuff doesn't seem very compelling, You can do all of the same things within Xcode.</p>
+
+          <br>
+          <p>And while thats true, after this point you get all of the benefits of Ruby.</p>
+        </section>
+
+        <section>
+          <p>Almost all of the Ruby features are available with the exception of two things:</p>
+          <br>
+          String Eval
+          <pre><code class="rb">eval("whyudodis = MyBadIdea.infect_my_system")</code></pre>
+          <br>
+          Require
+          <pre><code class="rb">require 'my_other_file'</code></pre>
+        </section>
+
+        <section>
+          <p>Apple does not allow the dynamic loading of code so using require throws an exception. There is a gem called <code>motion-require</code> which allows you to use <code>require_relative</code> within your projects.</p> This solved all of my code load order problems.
+        </section>
+
+        <section>
+          <p>Stand back Node.js, there is a new player in town:</p>
+          <h2>Code Sharing!</h2>
+        </section>
+
+        <section>
+          <p>In a project I just deployed the initial release of, the majority of the business logic is in a shared gem between the iOS application and the Rails backend.</p>
+        </section>
+
+        <section>
+          <h2>Blazing fast testing with Rspec</h2>
+          <br>
+          <pre class="unstyled">
+ $ bundle exec rspec
+<span style='color: green'>...................................................................................................................</span>
+
+Finished in 0.16608 seconds (files took 0.35396 seconds to load)
+115 examples, 0 failures
+          </pre>
+        </section>
+
+        <section>
+          <p>I'd recommend asking a veteran iOS develpoer about testing and watch the look of horror in their face. If they do test, ask if their runner is done in 0.1 seconds.</p>
+          <img src="imgs/trollface.png">
+        </section>
+
+
+        <section>
+          <h1>Caveats</h1>
+        </section>
+
+        <section>
+          <p>Integration testing just sucks in general on iOS. I haven't gotten it working to my liking so I've retired to just manually testing the UI. All of the business logic is tested outside of the RubyMotion app.</p>
+        </section>
+
+        <section>
+          <p>RubyMotion handles implementing automatic reference counting so you must watch your references. If you have a cyclical reference you will need to create a <code>WeakRef.new</code> to prevent memory leaks. (This is true of Objective-C as well). Best Ruby practices apply here as well.</p>
+        </section>
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
