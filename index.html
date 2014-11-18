@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
 
-    <title>reveal.js - The HTML Presentation Framework</title>
+    <title>RubyMotion - A Talk by Tyler Johnston @tylerjohnst</title>
 
     <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
     <meta name="author" content="Hakim El Hattab">
@@ -58,6 +58,12 @@
         border-bottom: 3px solid #000 !important;
       }
 
+      .fixed-bottom {
+        position: absolute !important;
+        bottom: 0 !important;
+        left: 20px !important;
+      }
+
     </style>
 
     <!--[if lt IE 9]>
@@ -68,6 +74,7 @@
   <body>
 
     <div class="reveal">
+      <!-- <h2 class='fixed-bottom'>Follow along: <a>tamparuby.github.io/rubymotion-slides</a></h2> -->
 
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
@@ -79,6 +86,7 @@
           <p><small>
             A talk by <a>@tylerjohnst</a>
           </small></p>
+
         </section>
 
         <section>
@@ -97,7 +105,7 @@
         </section>
 
         <section>
-          <p>RubyMotion allows you as the developer to create and publish native Mac and iOS applications using Ruby.</p>
+          <p>RubyMotion allows you as the developer to create and publish native Mac and iOS (and soon Android) applications using Ruby.</p>
         </section>
 
         <section>
@@ -208,8 +216,10 @@ end
 label = UILabel.alloc.init
 label.text = 'My Super Cool String'
 
+views = { 'label' => label }
+
 view.addConstraints(
-  NSLayoutConstraint.constraintsWithVisualFormat('H:|-20-[password]-20-|',
+  NSLayoutConstraint.constraintsWithVisualFormat('H:|-20-[label]-20-|',
     options: 0,
     metrics: nil,
     views:   views
@@ -345,11 +355,32 @@ Finished in 0.16608 seconds (files took 0.35396 seconds to load)
         </section>
 
         <section>
+          <p>It's not free. The license is <strong>$200</strong> but is worth every penny. If you would have bought it during early registration it was only <strong>$100</strong>.
+          </p>
+          <br>
+          <p>The RubyMotion team has also been slowly open sourcing parts of the framework. I believe their goal is to get almost all of it in the open. I think they are keeping secret compiler related things closed.</p>
+        </section>
+
+        <section>
+          <p>Not all of Ruby standard library is available. Where overlaps were visible between iOS and Ruby the solution was just to use those. Missing things can be patched with a CocoaPod or a Ruby gem.</p>
+        </section>
+
+        <section>
+          <p>Most Ruby gems won't work in the Runtime but they can be used before the compilation process starts. One example being I18n that I used in my project.</p>
+        </section>
+
+        <section>
           <p>Integration testing just sucks in general on iOS. I haven't gotten it working to my liking so I've retired to just manually testing the UI. All of the business logic is tested outside of the RubyMotion app.</p>
         </section>
 
         <section>
           <p>RubyMotion handles implementing automatic reference counting so you must watch your references. If you have a cyclical reference you will need to create a <code>WeakRef.new</code> to prevent memory leaks. (This is true of Objective-C as well). Best Ruby practices apply here as well.</p>
+        </section>
+
+        <section>
+          <h1>Thanks for Coming!</h1>
+
+          <h4>Questions? Comments?</h4>
         </section>
       </div>
 
